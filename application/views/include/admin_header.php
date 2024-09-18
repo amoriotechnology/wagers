@@ -846,9 +846,9 @@
                            <ul class="treeview-menu">
                               <li class="treeview  "><a href="<?php echo base_url(); ?>/Chrm/federal_tax_report?id=<?php echo $encode_com_id; ?>"><?php echo ('Income Tax');?></a></li>
                               <li class="treeview  "><a href="<?php echo base_url(); ?>/Chrm/social_tax_report?id=<?php echo $encode_com_id; ?>"><?php echo ('Social Security');?> </a></li>
-                              <li class="treeview  "><a href="<?php echo base_url(); ?>/Chrm/medicare_tax_report"><?php echo ('Medicare');?></a></li>
-                                <li class="treeview  "><a href="<?php echo base_url(); ?>/Chrm/unemployment_tax_report"><?php echo ('Unemployment');?></a></li>
-                                  <li class="treeview  "><a href="<?php echo base_url(); ?>/Chrm/federal_summary"><?php echo ('Overall Summary');?></a></li>
+                              <li class="treeview  "><a href="<?php echo base_url(); ?>/Chrm/medicare_tax_report?id=<?php echo $encode_com_id; ?>"><?php echo ('Medicare');?></a></li>
+                                <li class="treeview  "><a href="<?php echo base_url(); ?>/Chrm/unemployment_tax_report?id=<?php echo $encode_com_id; ?>"><?php echo ('Unemployment');?></a></li>
+                                  <li class="treeview  "><a href="<?php echo base_url(); ?>/Chrm/federal_summary?id=<?php echo $encode_com_id; ?>"><?php echo ('Overall Summary');?></a></li>
                            </ul>
                         </li>
                           <li class="treeview  ">
@@ -862,7 +862,7 @@
                            <?php if (!empty($state_tax_list)) : ?>
     <?php foreach ($state_tax_list as $st) : ?>
         <li class="treeview">
-            <a href="<?php echo base_url('Chrm/report/' . $st['tax']); ?>"><?php echo $st['tax']; ?></a>
+            <a href="<?php echo base_url('Chrm/report/' . $st['tax']) . '?id=' . $encode_com_id; ?>"><?php echo $st['tax']; ?></a>
          </li>
     <?php endforeach; ?>
 <?php else : ?>

@@ -10,6 +10,8 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.14.0/themes/base/jquery-ui.css">
+
 <link href="<?php echo base_url() ?>assets/css/daterangepicker.css" rel="stylesheet">
 <link href="<?php echo base_url() ?>assets/css/style.css" rel="stylesheet">
 
@@ -806,7 +808,7 @@ elseif ($employee_name[0]['payroll_type'] == 'Hourly') { ?>
 <label for="aadhar">Cheque Date<i class="text-danger">*</i></label> 
  </div>
     <div class="col-sm-6"> 
-<input type="date" id="cheque_date" name="cheque_date" value="<?php  echo $time_sheet_data[0]['cheque_date']; ?>"  class="form-control"  requried/><br />
+<input type="text" id="datepicker_cheque" name="cheque_date" value="<?php  echo $time_sheet_data[0]['cheque_date']; ?>"  class="form-control"  requried/><br />
         </div></div>
 </div>
 <div id="pc" >
@@ -836,6 +838,20 @@ elseif ($employee_name[0]['payroll_type'] == 'Hourly') { ?>
 
 
 </div>
+</div>
+
+
+<!--Cash Method -->
+<div id="Cashmethod">
+    <br/>
+    <div class="col-sm-12" style="padding-top:20px;">
+    <div class="col-sm-6">
+        <label for="aadhar">Date<i class="text-danger">*</i></label> 
+    </div>
+       <div class="col-sm-6"> 
+            <input type="text" id="datepicker" name="cash_date" value="<?php echo $time_sheet_data[0]['cheque_date']; ?>"  class="form-control" requried /><br />
+        </div>
+    </div>
 </div>
 
 
@@ -874,12 +890,14 @@ elseif ($employee_name[0]['payroll_type'] == 'Hourly') { ?>
     {
         document.getElementById("adc").style.display = "block";
          document.getElementById("pc").style.display = "none";
+         document.getElementById("Cashmethod").style.display = "none";
           // document.getElementById("ps").style.display = "none";
     }
     else   if (that.value == "Bank")
     {
           document.getElementById("adc").style.display = "none";
          document.getElementById("pc").style.display = "block";
+         document.getElementById("Cashmethod").style.display = "none";
         //   document.getElementById("ps").style.display = "none";
       
     }
@@ -887,6 +905,7 @@ elseif ($employee_name[0]['payroll_type'] == 'Hourly') { ?>
     {
         document.getElementById("adc").style.display = "none";
          document.getElementById("pc").style.display = "none";
+         document.getElementById("Cashmethod").style.display = "block";
          //  document.getElementById("ps").style.display = "block";
     }
 
@@ -894,6 +913,7 @@ elseif ($employee_name[0]['payroll_type'] == 'Hourly') { ?>
     {
               document.getElementById("adc").style.display = "none";
          document.getElementById("pc").style.display = "none";
+         document.getElementById("Cashmethod").style.display = "none";
           // document.getElementById("ps").style.display = "none";
     }
 }
@@ -908,6 +928,7 @@ var that=$('#selector').val();
     {
         $('#adc').show();
       $('#pc').hide();
+      $('#Cashmethod').hide();
     //  $('#ps').hide();
       
     }
@@ -915,6 +936,7 @@ var that=$('#selector').val();
     {
              $('#adc').hide();
       $('#pc').show();
+      $('#Cashmethod').hide();
      // $('#ps').hide();
 
         
@@ -924,11 +946,13 @@ var that=$('#selector').val();
     {
         $('#adc').hide();
       $('#pc').hide();
+      $('#Cashmethod').show();
     //  $('#ps').show();
      
     }else{
            $('#adc').hide();
       $('#pc').hide();
+      $('#Cashmethod').hide();
      // $('#ps').hide();
     }
 
@@ -1417,5 +1441,16 @@ $('#total_net').val(total_net.toFixed(2)).trigger('change');
     var lastDateMDY = convertDateFormat(lastDate);
   $('#reportrange').val(firstDateMDY + ' - ' + lastDateMDY);
 
+});
+
+
+$(function() {
+    $("#datepicker").datepicker({
+        dateFormat: 'mm-dd-yy'  
+    });
+
+    $("#datepicker_cheque").datepicker({
+        dateFormat: 'mm-dd-yy'  
+    });
 });
 </script>

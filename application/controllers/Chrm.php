@@ -734,37 +734,6 @@ public function federal_summary()
     $this->template->full_admin_html_view($content);
 }
 
-// New Federal Overall Summary - Madhu
-public function federalsummary()
-{
-    $setting_detail = $this->Web_settings->retrieve_setting_editdata();
-    $data['setting_detail'] = $setting_detail;
-    $data['fed_tax'] = $this->Hrm_model->social_tax_sumary();
-    $data['fed_tax_emplr'] = $this->Hrm_model->social_tax_employer();
-    $data['state_tax_list'] = $this->Hrm_model->stateTaxlist();
-    $data['state_summary_employee'] = $this->Hrm_model->state_summary_employee();
-    $data['state_list'] = $this->db->select('*')->from('state_and_tax')->order_by('state', 'ASC')->where('created_by', $this->session->userdata('user_id'))->where('Status', 2)->group_by('id')->get()->result_array();
-    $mergedArray = array();
-      foreach ($data['fed_tax'] as $item1) {
-          $mergedItem = $item1;
-          foreach ($data['fed_tax_emplr'] as $item2) {
-              if ($item1['employee_id'] == $item2['employee_id']) {
-                  foreach ($item2 as $key => $value) {
-                      if (!isset($mergedItem[$key])) {
-                          $mergedItem[$key] = $value;
-                      }
-                  }
-                  $mergedArray[] = $mergedItem;
-                  break;
-              }
-          }
-      }
-    $data['mergedArray']=$mergedArray;
-    $data['employee_data'] =$this->Hrm_model->employee_data_get();
-    $content  = $this->parser->parse('hr/reports/test', $data, true);
-    $this->template->full_admin_html_view($content);
-}
-
 // Fetch data in Overall Social Tax - Madhu
 public function overallSocialtaxIndexData()
 {   
@@ -1276,6 +1245,13 @@ public function second_pay_slip() {
              $date_split=explode(' - ',$this->input->post('date_range'));
       $data_timesheet['start'] =  $date_split[0];
        $data_timesheet['end'] =  $date_split[1];
+
+       if ($this->input->post('payment_method') == 'Cash') {
+            $data_timesheet['cheque_date'] =(!empty($this->input->post('cash_date',TRUE))?$this->input->post('cash_date',TRUE):'');
+        } 
+        else if ($this->input->post('payment_method') == 'Cheque') {
+            $data_timesheet['cheque_date'] =(!empty($this->input->post('cheque_date',TRUE))?$this->input->post('cheque_date',TRUE):'');
+        }
        
      
        
@@ -1310,7 +1286,7 @@ $data_timesheet['quarter'] = $quarter;
        $data_timesheet['admin_name'] = (!empty($this->input->post('administrator_person',TRUE))?$this->input->post('administrator_person',TRUE):'');
        $data_timesheet['payment_method'] =(!empty($this->input->post('payment_method',TRUE))?$this->input->post('payment_method',TRUE):'');
        $data_timesheet['cheque_no'] =(!empty($this->input->post('cheque_no',TRUE))?$this->input->post('cheque_no',TRUE):'');
-       $data_timesheet['cheque_date'] =(!empty($this->input->post('cheque_date',TRUE))?$this->input->post('cheque_date',TRUE):'');
+      
          $data_timesheet['bank_name'] =(!empty($this->input->post('bank_name',TRUE))?$this->input->post('bank_name',TRUE):'');
            $data_timesheet['payment_ref_no'] =(!empty($this->input->post('payment_refno',TRUE))?$this->input->post('payment_refno',TRUE):'');
      $timesheet_id  = $this->input->post('tsheet_id');

@@ -1607,13 +1607,14 @@ public function employr($emp_name = null, $date = null)
     $this->db->order_by('b.time_sheet_id', 'ASC');
     $this->db->group_by('b.f_tax, b.m_tax, b.s_tax, b.u_tax,b.time_sheet_id, c.first_name, c.middle_name, c.last_name,c.employee_tax');
 
-     if ($emp_name !== 'All') {
+    if ($emp_name !== 'All') {
         $trimmed_emp_name = trim($emp_name);
         $this->db->group_start();
         $this->db->like("TRIM(CONCAT_WS(' ', c.first_name, c.middle_name, c.last_name))", $trimmed_emp_name);
         $this->db->or_like("TRIM(CONCAT_WS(' ', c.first_name, c.last_name))", $trimmed_emp_name);
         $this->db->group_end();
     }
+
     if ($date) {
         $dates = explode(' to ', $date);
         $start_date = $dates[0];
@@ -4609,6 +4610,8 @@ public function monthly_tax_info($employee_status,$final,$monthly_range){
         $this->db->where("b.create_by", $decodedId);
 
         $query = $this->db->get();
+
+        // echo $this->db->last_query(); die();
     
         if ($query === false) {
             return false;
